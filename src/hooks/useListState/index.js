@@ -1,10 +1,16 @@
-import {useState} from "react";
+import { useState } from "react";
 
 export const useListState = () => {
 
   const [state, setState] = useState([]);
+  const [id, setId] = useState(0);
+
 
   const append = (...items) => {
+    items.map((item, index) => {
+      item.id = id + index;
+    });
+    setId(id + items.length);
     setState((state) => {
       return [
         ...state,
@@ -29,8 +35,6 @@ export const useListState = () => {
       return state.filter((_, index) => !indexes.includes(index))
     })
   }
-
-
 
   return [
     state,
