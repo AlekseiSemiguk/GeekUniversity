@@ -1,0 +1,21 @@
+.input-form {
+    
+    border: 1px solid rgb(185, 185, 185);
+    border-radius: 3px;
+    margin: 10px 30px;
+    padding: 16px 24px;
+    text-align: left;
+    display: flex;
+    align-self: flex-start;
+    flex-direction: column;
+}
+
+.input-form_button {
+    margin-top: 20px;
+}
+
+.input-form_textarea {
+    resize: none;
+    width: 200px;
+    height: 100px;
+}
