@@ -1,0 +1,13 @@
+.img-container {
+    max-width: 1000px;
+    margin: 50px auto;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+}
+
+.img {
+    width: 20%;
+    border: 1px solid rgb(204, 198, 198);
+}
