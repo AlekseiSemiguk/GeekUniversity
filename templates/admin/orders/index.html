@@ -1,0 +1,44 @@
+{% include 'header.html' %}
+<h2>User Orders</h2>
+{% for user,orders in content_data.orders %}
+<div class="account__title">
+    Заказы пользователя ID: {{ user }}
+    {% for order_number, order in orders %}
+    <div class="order">
+
+        Номер заказа: {{order_number}}
+        {% for position in order.positions %}
+            <div class="cart__left__product-card">
+                <div class="cart__left__product-card__img-container">
+                    <img class="cart__left__product-card__img" src="/public/img/{{ position.imgfile }}" alt="">
+                </div>
+                <div class="cart__left__product-card__info">
+                    <div class="cart__left__product-card__top-block">
+                        <div class="cart__left__product-card__top-block__product-name">
+                            {{position.name}}
+                        </div>
+                    </div>
+                    <p class="cart__left__product-card__info__text">Price: ${{position.price}}</p>
+                    <p class="cart__left__product-card__info__text">Quantity: {{position.quantity}}</p>
+                </div>
+            </div>
+        {% endfor %}
+        <p>
+    
+        Статус заказа: 
+        <select size="4" id="select{{order_number}}">
+            {% for key,status in content_data.statusList %}
+                <option {% if order.status == key %} selected {% endif %} value="{{key}}">{{status}}</option>
+            {% endfor %}
+          
+        </select>
+        </p>
+
+        <div class="account__button-logout update-order" data-id="{{order_number}}"> Сохранить статус заказа</div>
+
+        </div>
+    {% endfor%}
+</div>
+{% endfor%}
+
+{% include 'footer.html' %}
