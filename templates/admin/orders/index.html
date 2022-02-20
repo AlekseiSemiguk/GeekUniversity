@@ -1,0 +1,73 @@
+{% include 'header.html' %}
+<div class="account__container">
+
+    <section class="featured-items center">
+        <div class="featured-items__products">
+            {%  for good in content_data.goods %}
+                <div class="featured-items__products__container">
+                    <div class="featured-items__products__container__imagebox">
+                        <img class="featured-items__products__container__imagebox__img" src="/public/img/{{ good.imgfile }}"
+                            alt="product image">
+                    </div>
+                    <input class="featured-items__products__container__heading justify" id="title_{{ good.id }}" value ="{{ good.name }} " >
+                    <textarea class="featured-items__products__container__text justify" id="description_{{ good.id }}" rows="5">{{ good.description }}</textarea>
+                    <input class="featured-items__products__price justify" id="price_{{ good.id }}" value="{{ good.price }}">
+                    <div class="account__button-logout save-changes" data-id="{{ good.id }}">Сохранить изменения</div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <h2>Добавить новый товар</h2>
+    <form action="/public/index.php?path=admin/goods/new/" method="post" enctype="multipart/form-data">
+        <label>Наименование</label><input class="featured-items__products__container__heading justify" name="title">
+        <label>Описание</label><textarea class="featured-items__products__container__text justify" name="description" rows="5"></textarea>
+        <label>Цена</label><input class="featured-items__products__price justify" name="price">
+        <p>Выберите файл в формате JPG/JPEG или GIF</p>
+        <input type="file" name="photo" accept="image/jpeg,image/gif"><br><br>
+        <input type="submit" value="Добавить товар">
+    </form>
+
+<h2>User Orders</h2>
+{% for user,orders in content_data.orders %}
+<div class="account__title">
+    Заказы пользователя ID: {{ user }}
+    {% for order_number, order in orders %}
+    <div class="order">
+
+        Номер заказа: {{order_number}}
+        {% for position in order.positions %}
+            <div class="cart__left__product-card">
+                <div class="cart__left__product-card__img-container">
+                    <img class="cart__left__product-card__img" src="/public/img/{{ position.imgfile }}" alt="">
+                </div>
+                <div class="cart__left__product-card__info">
+                    <div class="cart__left__product-card__top-block">
+                        <div class="cart__left__product-card__top-block__product-name">
+                            {{position.name}}
+                        </div>
+                    </div>
+                    <p class="cart__left__product-card__info__text">Price: ${{position.price}}</p>
+                    <p class="cart__left__product-card__info__text">Quantity: {{position.quantity}}</p>
+                </div>
+            </div>
+        {% endfor %}
+        <p>
+    
+        Статус заказа: 
+        <select size="4" id="select{{order_number}}">
+            {% for key,status in content_data.statusList %}
+                <option {% if order.status == key %} selected {% endif %} value="{{key}}">{{status}}</option>
+            {% endfor %}
+          
+        </select>
+        </p>
+
+        <div class="account__button-logout update-order" data-id="{{order_number}}"> Сохранить статус заказа</div>
+
+        </div>
+    {% endfor%}
+</div>
+{% endfor%}
+</div>
+{% include 'footer.html' %}
